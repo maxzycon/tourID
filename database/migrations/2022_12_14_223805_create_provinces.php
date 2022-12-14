@@ -7,15 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->smallInteger("role")->comment("1 = admin, 2 = guide, 3 = user");
+        Schema::create('provinces', function (Blueprint $table) {
+            $table->char("id",12)->primary();
+            $table->string("name");
         });
     }
 
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn("role");
-        });
+        Schema::dropIfExists('provinces');
     }
 };
