@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -15,8 +16,13 @@ class Destination extends Model
         return $this->hasMany(Photo::class, 'destination_id');
     }
 
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
+
     public function guide(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'detination_user')->withPivot("price");
     }
 }

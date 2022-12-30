@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if(auth()->user()->role == 1)
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
@@ -61,6 +62,20 @@
                     <x-nav-link :href="route('article.index')" :active="request()->routeIs('article.*')">
                         {{ __('Article') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('bookingAdmin.index')" :active="request()->routeIs('bookingAdmin.*')">
+                        {{ __('Order') }}
+                    </x-nav-link>
+
+                    @elseif(auth()->user()->role == 2)
+                        <x-nav-link :href="route('destinationGuide.index')" :active="request()->routeIs('destinationGuide.*')">
+                            {{ __('Destination') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('destinationGuideBook.index')" :active="request()->routeIs('destinationGuideBook.*')">
+                            {{ __('Booking') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

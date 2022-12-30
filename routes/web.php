@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\MasterDataArea\DistrictController;
 use App\Http\Controllers\Admin\MasterDataArea\ProvinceController;
 use App\Http\Controllers\Admin\MasterDataArea\RegencyController;
 use App\Http\Controllers\Admin\MasterDataArea\VillageController;
 use App\Http\Controllers\Admin\PromoController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect("/login");
-});
+Route::get('/', [LandingPageController::class,'index'])->name("home");
+Route::post('/booking', [LandingPageController::class,'store'])->name("booking");
+Route::get('/detail/{destination:destinationSlug}', [LandingPageController::class,'detail'])->name("detail-destinations");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -40,6 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::resource("promo",PromoController::class);
     Route::resource("article",ArticleController::class);
     Route::resource("destination",DestinationController::class);
+    Route::resource("destinationGuide",\App\Http\Controllers\Guide\DestinationController::class);
+    Route::resource("destinationGuideBook",\App\Http\Controllers\Guide\BookingController::class);
+    Route::resource("bookingAdmin",BookingController::class);
 });
 
 require __DIR__.'/auth.php';
